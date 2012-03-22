@@ -22,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.FileHandler;
@@ -52,6 +54,10 @@ import javax.swing.border.TitledBorder;
 import org.oyrm.kobo.postproc.KoboSurveyDeviceSynchronizer;
 import org.oyrm.kobo.postproc.constants.Constants;
 import org.oyrm.kobo.postproc.utils.FUtil;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class KoboPostProcPanel extends JPanel implements ActionListener,
@@ -1019,8 +1025,11 @@ PropertyChangeListener {
 		validateDir(xmlDir);
 		validateDir(sourceDir);
 		
-		//build the xml directory
-	    boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
+		
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
+	    success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
 		
 		/*if(!sourceDir.toString().endsWith("odk"))
@@ -1036,7 +1045,7 @@ PropertyChangeListener {
 			return;
 		}
 		
-		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files")), deviceText.getText());
+		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date()))), deviceText.getText());
 		progressMonitor = new ProgressMonitor(this, appText[Constants.WRITING_XML_TO_STORAGE]
 				, "", 0, xmlSyncProcessor
 				.getLengthOfTask());
