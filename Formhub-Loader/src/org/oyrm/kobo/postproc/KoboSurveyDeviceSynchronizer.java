@@ -225,26 +225,24 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 			OutputStream out = null;
 			int survey = 0;
 			for (String fileName : folder.list()) {
-				if(fileName.endsWith(".zip"))
-				{
-					    File f = new File(Location.concat("/Downloaded Files")+"/"+fileName);
-					    HttpClient client = new DefaultHttpClient();  
-						String postURL = "http://formhub.org/"+username +"/bulk-submission";
-						HttpPost post = new HttpPost(postURL); 
-						FileBody bin = new FileBody(f);
-						MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-						submission.addPart("zip_submission_file", bin);
-						post.setEntity(submission); 
-						HttpResponse response = client.execute(post);  
-						HttpEntity resEntity = response.getEntity();  
-						if (resEntity != null) {    
-		                    
-						}
-						/*copy the file into synchronized folder and delete the rest */
-						File dir = new File(Location.concat("/Synchonized Files"));
-						boolean success = f.renameTo(new File(dir, f.getName()));
-						survey ++;
-				}
+					if(fileName.endsWith(".zip"))
+					{
+						    File f = new File(Location.concat("/Downloaded Files/"+fileName));
+						    HttpClient client = new DefaultHttpClient();
+						    String postURL = "http://formhub.org/"+username +"/bulk-submission";
+						    HttpPost post = new HttpPost(postURL); 
+							FileBody bin = new FileBody(f);
+							MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+							submission.addPart("zip_submission_file", bin);
+							post.setEntity(submission); 
+							HttpResponse response = client.execute(post);  
+							HttpEntity resEntity = response.getEntity();  
+							if (resEntity != null) {    
+			               }
+							File dir = new File(Location.concat("/Synchonized Files"));
+							boolean shiftFiles = f.renameTo(new File(dir, f.getName()));
+							survey ++;
+					}
 				
 			}
 			
@@ -252,6 +250,46 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 		return true;
 			
 	}
+	
+	/*public boolean BulkUpload(String username, String Location) throws MalformedURLException,IOException
+	{
+		try{
+			File folder = new File(Location.concat("/Downloaded Files"));
+			InputStream in = null;
+			OutputStream out = null;
+			int survey = 0;
+			for (String folderDate : folder.list()) {
+				File zipfiles = new File(Location.concat("/Downloaded Files/2012-03-22/"));
+				for (String fileName : zipfiles.list())
+				{
+					
+					if(fileName.endsWith(".zip"))
+					{
+						    File f = new File(Location.concat("/Downloaded Files/2012-03-22/" + fileName));
+						    HttpClient client = new DefaultHttpClient();  
+							String postURL = "http://192.168.1.78:8000/"+username +"/bulk-submission";
+							HttpPost post = new HttpPost(postURL); 
+							FileBody bin = new FileBody(f);
+							MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+							submission.addPart("zip_submission_file", bin);
+							post.setEntity(submission); 
+							HttpResponse response = client.execute(post);  
+							HttpEntity resEntity = response.getEntity();  
+							if (resEntity != null) {    
+			               }
+							//copy the file into synchronized folder and delete the rest 
+							boolean makeFolder = (new File(Location.concat("/Synchonized Files/"+folderDate))).mkdir();
+							File dir = new File(Location.concat("/Synchonized Files/"+ folderDate));
+							boolean shiftFiles = f.renameTo(new File(dir, f.getName()));
+							survey ++;
+					}
+				}
+			}
+			
+		}catch (Exception e){ e.printStackTrace();  return false;}
+		return true;
+			
+	}*/
 	
 	public boolean Unmount(String Directory)
 	{

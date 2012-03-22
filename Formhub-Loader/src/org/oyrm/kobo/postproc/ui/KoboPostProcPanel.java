@@ -1029,7 +1029,7 @@ PropertyChangeListener {
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
-	    success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
+	    //success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
 		
 		/*if(!sourceDir.toString().endsWith("odk"))
@@ -1045,7 +1045,7 @@ PropertyChangeListener {
 			return;
 		}
 		
-		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date()))), deviceText.getText());
+		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+simpleDateFormat.format(new Date())));
 		progressMonitor = new ProgressMonitor(this, appText[Constants.WRITING_XML_TO_STORAGE]
 				, "", 0, xmlSyncProcessor
 				.getLengthOfTask());
