@@ -1070,6 +1070,7 @@ PropertyChangeListener {
 		AggregateErrorLabel.setText("");
 		validateDir(xmlDir);
 		validateDir(sourceDir);
+		
 		/*if(!sourceDir.toString().endsWith("odk"))
 		{
 			//Error message if Folder is Wrong
