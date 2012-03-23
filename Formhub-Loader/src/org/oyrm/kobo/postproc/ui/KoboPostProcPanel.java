@@ -23,9 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
@@ -55,6 +58,7 @@ import org.oyrm.kobo.postproc.KoboSurveyDeviceSynchronizer;
 import org.oyrm.kobo.postproc.constants.Constants;
 import org.oyrm.kobo.postproc.utils.FUtil;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -1044,8 +1048,10 @@ PropertyChangeListener {
 			logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
-		
-		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+simpleDateFormat.format(new Date())));
+		Calendar cal = Calendar.getInstance();
+	    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.MEDIUM);
+	    
+		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+df.format(cal.getTime())));
 		progressMonitor = new ProgressMonitor(this, appText[Constants.WRITING_XML_TO_STORAGE]
 				, "", 0, xmlSyncProcessor
 				.getLengthOfTask());
