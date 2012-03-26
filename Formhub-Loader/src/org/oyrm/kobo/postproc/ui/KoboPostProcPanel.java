@@ -174,10 +174,6 @@ PropertyChangeListener {
 	    "Formhub ID:",
 	};
 	
-	
-
-	
-	
 	private static KoboPostProcPanel INSTANCE;
 	
 	private JButton xmlAggregateButton;
