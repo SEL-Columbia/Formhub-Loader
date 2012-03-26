@@ -991,7 +991,7 @@ PropertyChangeListener {
 		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
 	    //success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
-	    AggregateErrorLabel.setText("");
+	    
 		/*if(!sourceDir.toString().endsWith("odk"))
 		{
 			AggregateErrorLabel.setText("Select ODK Folder");
@@ -1113,7 +1113,6 @@ PropertyChangeListener {
 		//logger.entering(getClass().getName(), "syncODK()");
 		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
 		AggregateErrorLabel.setText("");
-		
 		validateDir(xmlDir);
 		validateDir(sourceDir);
 		if(UserNameText.getText().isEmpty())

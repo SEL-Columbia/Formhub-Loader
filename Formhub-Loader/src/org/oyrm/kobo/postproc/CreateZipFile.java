@@ -3,6 +3,7 @@ package org.oyrm.kobo.postproc;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -21,8 +22,18 @@ public class CreateZipFile {
 
 	    fileWriter = new FileOutputStream(destZipFile);
 	    zip = new ZipOutputStream(fileWriter);
-
 	    addFolderToZip("", srcFolder, zip);
+	    
+	    File directory = new File(srcFolder);
+	    if(!directory.exists()){
+        }else{
+        	try{
+               delete(directory);
+           }catch(IOException e){
+               e.printStackTrace();
+               System.exit(0);
+           }
+        }
 	    zip.flush();
 	    zip.close();
 	  }
@@ -56,6 +67,37 @@ public class CreateZipFile {
 	      }
 	    }
 	  }
+	  
+	  public static void delete(File file)
+		    	throws IOException{
+		 
+		    	if(file.isDirectory()){
+		 
+		    		if(file.list().length==0){
+		    		   file.delete();
+		 
+		    		}else{
+		 
+		    		   //list all the directory contents
+		        	   String files[] = file.list();
+		 
+		        	   for (String temp : files) {
+		        	      File fileDelete = new File(file, temp);
+		        	     delete(fileDelete);
+		        	   }
+		 
+		        	   if(file.list().length==0){
+		           	     file.delete();
+		        	     System.out.println("Directory is deleted : " 
+		                                                  + file.getAbsolutePath());
+		        	   }
+		    		}
+		 
+		    	}else{
+		    		file.delete();
+		    		System.out.println("File is deleted : " + file.getAbsolutePath());
+		    	}
+		    }
 	}
    
    

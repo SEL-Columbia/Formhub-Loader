@@ -190,24 +190,17 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 	public boolean SendFiles(String username, String Location) throws MalformedURLException,IOException
 	{
 		    try{
-		    	//File f = new File("/Users/Arindam/Desktop/TestFolder/Test.zip");
 		    	File f = new File(Location);
 	            HttpClient client = new DefaultHttpClient();  
-	            //String postURL = "http://formhub.org/"+username +"/bulk-submission";
 	            String postURL = "http://formhub.org/"+username +"/bulk-submission";
-	            //String postURL = "http://192.168.1.78:8000/"+username +"/bulk-submission"; 
 	            HttpPost post = new HttpPost(postURL); 
 	            FileBody bin = new FileBody(f);
 	            MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		           submission.addPart("zip_submission_file", bin);
-		           //submission.setContentType("application/zip");
 		            post.setEntity(submission); 
 		            HttpResponse response = client.execute(post);  
 		            HttpEntity resEntity = response.getEntity();  
 		            if (resEntity != null) {    
-		                    //Object Log;
-							//System.out.println("RESPONSE" + EntityUtils.toString(resEntity));
-		            	    //return true;
 		             }
 	            }catch (Exception e){ e.printStackTrace(); return false;}
 			return true;
