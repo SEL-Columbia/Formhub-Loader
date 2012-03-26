@@ -217,9 +217,19 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public boolean BulkUpload(String username, String Location) throws MalformedURLException,IOException
+	public String BulkUpload(String username, String Location) throws MalformedURLException,IOException
 	{
+		String outR = "";
 		try{
+			//Getting the logfile location
+			FileHandler fh = new FileHandler(Location.concat("/MyLogFile.log"));  
+            logger.addHandler(fh);
+            
+          //logger.setLevel(Level.ALL);  
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);  
+            
+            
 			File folder = new File(Location.concat("/Downloaded Files"));
 			InputStream in = null;
 			OutputStream out = null;
@@ -235,9 +245,11 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 							MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 							submission.addPart("zip_submission_file", bin);
 							post.setEntity(submission); 
-							HttpResponse response = client.execute(post);  
-							HttpEntity resEntity = response.getEntity();  
-							if (resEntity != null) {    
+							HttpResponse response = client.execute(post); 
+							HttpEntity resEntity = response.getEntity();
+							logger.info("USER:  "+username+ ":  " +  EntityUtils.toString(response.getEntity()));
+							if (resEntity != null) {
+								//return resEntity.toString();
 			               }
 							File dir = new File(Location.concat("/Synchonized Files"));
 							boolean shiftFiles = f.renameTo(new File(dir, f.getName()));
@@ -246,10 +258,12 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 				
 			}
 			
-		}catch (Exception e){ e.printStackTrace();  return false;}
-		return true;
+		}catch (Exception e){ e.printStackTrace();  return e.toString();}
+		//WriteLogFiles();
+		return outR;
 			
 	}
+	
 	
 	/*public boolean BulkUpload(String username, String Location) throws MalformedURLException,IOException
 	{

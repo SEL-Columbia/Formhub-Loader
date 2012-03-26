@@ -1023,7 +1023,7 @@ PropertyChangeListener {
 		xmlSyncProcessor.execute();
 		progressMonitor.setNote(appText[Constants.STARTING_TEXT]);
 		progressMonitor.setProgress(1);
-
+		WriteLogFiles();
 		odkAggregateButton.setEnabled(true);
 		//xmlAggregateButton.setEnabled(false);
 		//UnmountButton.setEnabled(true);
@@ -1130,11 +1130,11 @@ PropertyChangeListener {
 			AggregateErrorLabel.setText("Syncing Files");
 		}
 		ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
-		boolean serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
+		String serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
+		AggregateErrorLabel.setText(serverCheck);
 		
 		
-		
-		if(serverCheck)
+		/*if(serverCheck.equals("true"))
 		{
 			AggregateErrorLabel.setText("Surveys Synced");
 			//odkAggregateButton.setEnabled(false);
@@ -1143,14 +1143,14 @@ PropertyChangeListener {
 			deviceText.setEditable(true);
 			deviceText.setText("");
 		}
-		else
+		if(serverCheck.equals("false"))
 		{
 			AggregateErrorLabel.setText("Error in Syncing ");
 			odkAggregateButton.setEnabled(true);
 			xmlAggregateButton.setEnabled(true);
 			UserNameText.setEditable(true);
 			deviceText.setEditable(true);
-		}
+		}*/
 		
 		
 	}
@@ -1504,6 +1504,11 @@ PropertyChangeListener {
 			}
 		}
 		return csvStorageButton;
+	}
+	
+	public void WriteLogFiles()
+	{
+		  
 	}
 	
 	public void windowClosed(WindowEvent e) {}
