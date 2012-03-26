@@ -133,7 +133,7 @@ PropertyChangeListener {
 	
 	
 
-	protected static String[] appTextEnglish = {
+	protected static String[] appText = {
 		"Download",
 		"Convert to CSV",
 		"Ready",
@@ -174,46 +174,7 @@ PropertyChangeListener {
 	    "Formhub ID:",
 	};
 	
-	protected static String[] appText = {
-		"Télécharger",
-		"Convert to CSV",
-		"Ready",
-		"Surveys Aggregated : %d",
-		"Surveys Synced to Server : %d",
-		"Parcourir",
-		"Change CSV Directory",
-		"Change Aggregate Storage Directory",
-		"Change Survey Source Directory",
-		"Csv Transcribe Process Completed",
-		"Task completed.\n",
-		"Completed %d%%.\n",
-		"XML Sync Process Completed",
-		"Retry", 
-		"Set",
-		"The %1$s does not exist. \n"+"The application can recheck the \n" +"directory now if you select \"Retry\". \n" +
-			"Otherwise, select \"Set\" to change the \n" + "%1$s location \n"+ "Current Directory %2$s",
-		"CSV storage directory",
-		"Set : %1$s",
-		"Starting",
-		"Writing XML to Storage",
-		"Convert to CSV Task",
-		"Aggregate XML Task",
-		"New Directory Preferences Set",
-		"Status",
-		"Convert to CSV",
-		" Télécharger les formulaires à partir de votre Téléphone",
-		"Counter",
-		"Emplacement des formulaires:",
-		"Save CSV To:",
-		"Télécharger dans:",
-		"Identifiant de l'equipement:",
-		"Sync To Server Task",
-		"Bulk Upload",
-		"Bulk Upload survey instances from System to odk server",
-		"Synchroniser le serveur",
-		"Unmount",
-		"Identifiant formhub",
-	};
+	
 
 	
 	
@@ -1031,7 +992,6 @@ PropertyChangeListener {
 		
 		
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
 	    //success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
@@ -1051,7 +1011,12 @@ PropertyChangeListener {
 		Calendar cal = Calendar.getInstance();
 	    DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.MEDIUM);
 	    
-		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+df.format(cal.getTime())));
+	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		//get current date time with Date()
+		Date date = new Date();
+		//System.out.println(dateFormat.format(date));
+	    
+		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+dateFormat.format(date)));
 		progressMonitor = new ProgressMonitor(this, appText[Constants.WRITING_XML_TO_STORAGE]
 				, "", 0, xmlSyncProcessor
 				.getLengthOfTask());
