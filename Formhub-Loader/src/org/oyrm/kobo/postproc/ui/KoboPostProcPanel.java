@@ -110,7 +110,7 @@ PropertyChangeListener {
 	}
 	static Dimension prefsize = new Dimension(300, 275);
 
-	private static Logger logger = Logger.getLogger("org.oyrm.kobo");  //  @jve:decl-index=0:
+	//private static Logger logger = Logger.getLogger("org.oyrm.kobo");  //  @jve:decl-index=0:
 	private static Formatter lf;
 	private static FileHandler lh;
 	static {
@@ -125,8 +125,8 @@ PropertyChangeListener {
 			e.printStackTrace();
 		}
 		lh.setFormatter(lf);
-		logger.addHandler(lh);
-		logger.setLevel(Level.parse(System.getProperty(Constants.PROPKEY_LOGGING_LEVEL)));
+		//logger.addHandler(lh);
+		//logger.setLevel(Level.parse(System.getProperty(Constants.PROPKEY_LOGGING_LEVEL)));
 	}
 
 
@@ -288,10 +288,10 @@ PropertyChangeListener {
 			applicationProps.store(out, "Saved Application Instance");
 			out.close();
 		} catch (FileNotFoundException e) {
-			logger.severe(e.getMessage());
+			//logger.severe(e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			logger.severe(e.getMessage());
+			//logger.severe(e.getMessage());
 		}
 	}
 
@@ -932,16 +932,16 @@ PropertyChangeListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == null) {
-			logger.finer("null action event");
+			//logger.finer("null action event");
 			return;
 		} else if (e.getActionCommand().equals(appText[Constants.XML_AGGREGATE_COMMAND])) {
-			logger.fine("ActionEvent " + e.getActionCommand());
+			//logger.fine("ActionEvent " + e.getActionCommand());
 			syncXML();
 			statusText.setText(appText[Constants.AGGREGATE_XML_TASK_TEXT]);
 
 		}
 		else if (e.getActionCommand().equals(appText[Constants.ODK_AGGREGATE_COMMAND])) {
-			logger.fine("ActionEvent " + e.getActionCommand());
+			//logger.fine("ActionEvent " + e.getActionCommand());
 			try {
 				syncServer();
 			} catch (MalformedURLException e1) {
@@ -957,7 +957,7 @@ PropertyChangeListener {
 		
 		
 		else if (e.getActionCommand().equals(appText[Constants.UNMOUNT_COMMAND])) {
-			logger.fine("ActionEvent " + e.getActionCommand());
+			//logger.fine("ActionEvent " + e.getActionCommand());
 			try {
 				unmountDevice();
 			} catch (IOException e1) {
@@ -968,7 +968,7 @@ PropertyChangeListener {
 
 		}
 		 else if (e.getActionCommand().equals(appText[Constants.CSV_CONVERT_COMMAND])) {			
-			logger.fine("ActionEvent " + e.getActionCommand());
+			//logger.fine("ActionEvent " + e.getActionCommand());
 			//trascribeToCSV();
 			statusText.setText(appText[Constants.CONVERT_TO_CSV_TASK_TEXT]);
 		}
@@ -980,8 +980,8 @@ PropertyChangeListener {
 	 * the directories specified in the GUI
 	 */
 	private void syncXML() {
-		logger.entering(getClass().getName(), "syncXML()");
-		logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
+		//logger.entering(getClass().getName(), "syncXML()");
+		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
 		AggregateErrorLabel.setText("");
 		validateDir(xmlDir);
 		validateDir(sourceDir);
@@ -991,7 +991,7 @@ PropertyChangeListener {
 		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
 	    //success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
-		
+	    AggregateErrorLabel.setText("");
 		/*if(!sourceDir.toString().endsWith("odk"))
 		{
 			AggregateErrorLabel.setText("Select ODK Folder");
@@ -1001,7 +1001,7 @@ PropertyChangeListener {
 		if(deviceText.getText().isEmpty())
 		{
 			AggregateErrorLabel.setText("Enter Device ID");
-			logger.entering(getClass().getName(), "syncXML()");
+			//logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
 		Calendar cal = Calendar.getInstance();
@@ -1023,7 +1023,6 @@ PropertyChangeListener {
 		xmlSyncProcessor.execute();
 		progressMonitor.setNote(appText[Constants.STARTING_TEXT]);
 		progressMonitor.setProgress(1);
-		WriteLogFiles();
 		odkAggregateButton.setEnabled(true);
 		//xmlAggregateButton.setEnabled(false);
 		//UnmountButton.setEnabled(true);
@@ -1034,15 +1033,15 @@ PropertyChangeListener {
 			Runtime.getRuntime().exec("cmd /c start unmount.bat");
 		  }catch (IOException e){}*/
 		
-		logger.fine("XML Storage Directory:" + xmlDir.getAbsolutePath());
-		logger.entering(getClass().getName(), "syncXML()");
+		//logger.fine("XML Storage Directory:" + xmlDir.getAbsolutePath());
+		//logger.entering(getClass().getName(), "syncXML()");
 
 	}
 	
 	private void syncODKServer() throws MalformedURLException, IOException
 	{
-		logger.entering(getClass().getName(), "syncODK()");
-		logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
+		//logger.entering(getClass().getName(), "syncODK()");
+		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
 		AggregateErrorLabel.setText("");
 		validateDir(xmlDir);
 		validateDir(sourceDir);
@@ -1058,14 +1057,14 @@ PropertyChangeListener {
 		{
 			//Error message if Device ID is missing
 			AggregateErrorLabel.setText("Enter Device ID");
-			logger.entering(getClass().getName(), "syncXML()");
+			//logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
 		if(UserNameText.getText().isEmpty())
 		{
 			//Error message if Device ID is missing
 			AggregateErrorLabel.setText("Enter Valid User");
-			logger.entering(getClass().getName(), "syncXML()");
+			//logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
 		ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
@@ -1111,8 +1110,8 @@ PropertyChangeListener {
 		deviceText.setText("");
 	}
 	private void syncServer() throws MalformedURLException, IOException {
-		logger.entering(getClass().getName(), "syncODK()");
-		logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
+		//logger.entering(getClass().getName(), "syncODK()");
+		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
 		AggregateErrorLabel.setText("");
 		
 		validateDir(xmlDir);
@@ -1121,7 +1120,7 @@ PropertyChangeListener {
 		{
 			//Error message if Device ID is missing
 			AggregateErrorLabel.setText("Enter Valid User");
-			logger.entering(getClass().getName(), "syncXML()");
+			//logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
 		
@@ -1130,11 +1129,10 @@ PropertyChangeListener {
 			AggregateErrorLabel.setText("Syncing Files");
 		}
 		ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
-		String serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
-		AggregateErrorLabel.setText(serverCheck);
+		boolean serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
 		
 		
-		/*if(serverCheck.equals("true"))
+		if(serverCheck)
 		{
 			AggregateErrorLabel.setText("Surveys Synced");
 			//odkAggregateButton.setEnabled(false);
@@ -1143,14 +1141,14 @@ PropertyChangeListener {
 			deviceText.setEditable(true);
 			deviceText.setText("");
 		}
-		if(serverCheck.equals("false"))
+		else
 		{
 			AggregateErrorLabel.setText("Error in Syncing ");
 			odkAggregateButton.setEnabled(true);
 			xmlAggregateButton.setEnabled(true);
 			UserNameText.setEditable(true);
 			deviceText.setEditable(true);
-		}*/
+		}
 		
 		
 	}

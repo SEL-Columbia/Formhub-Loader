@@ -55,22 +55,19 @@ import org.w3c.dom.Document;
  * 
  */
 public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
-	private static Logger logger = Logger.getLogger("org.oyrm.kobo.postproc");
+	private static Logger logger = Logger.getLogger("Formhub Uploader");
 	private static FileHandler lh;
 	private static Formatter lf;
+	private String DeviceID;
 	static {
 		try {
-			lh = new FileHandler(System.getProperty("user.home")
+			/*lh = new FileHandler(System.getProperty("user.home")
 					+ File.separator + Constants.CONFIG_STORAGEDIR
 					+ File.separator + "kobo.log", true);
-			lf = new SimpleFormatter();
+			lf = new SimpleFormatter();*/
 		} catch (SecurityException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		lh.setFormatter(lf);
-		logger.addHandler(lh);
 		
 		//logger.setLevel(Level.parse(System.getProperty(Constants.PROPKEY_LOGGING_LEVEL)));
 		logger.setLevel(Level.ALL);
@@ -90,6 +87,7 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 	private File readdir, storedir,zipdir,storeodk;
 	private String zipPathName;
 	private Integer nSynced;
+	 
 	
 	public KoboSurveyDeviceSynchronizer(){
 		
@@ -97,7 +95,7 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 
 	public KoboSurveyDeviceSynchronizer(File source, File storage, String DeviceID) {
 		super();
-		
+		this.DeviceID = DeviceID;
 		String DevicePathName = storage.toString().concat("/"+DeviceID);
 		zipPathName = storage.toString().concat("/"+DeviceID+".zip");
 		
@@ -160,7 +158,6 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 			CreateZipFile zips = new CreateZipFile();
 			zips.zipFolder(storedir.toString(), zipPathName);
 			deleteDir(storedir);
-			logger.fine("Syncing  files");
 			
 			
 		} catch (IOException ioex) {
@@ -217,12 +214,12 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public String BulkUpload(String username, String Location) throws MalformedURLException,IOException
+	public boolean BulkUpload(String username, String Location) throws MalformedURLException,IOException
 	{
-		String outR = "";
 		try{
 			//Getting the logfile location
-			FileHandler fh = new FileHandler(Location.concat("/MyLogFile.log"));  
+			boolean append = true;
+			FileHandler fh = new FileHandler(Location.concat("/UpdateLogFile.log"),append);  
             logger.addHandler(fh);
             
           //logger.setLevel(Level.ALL);  
@@ -247,7 +244,10 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 							post.setEntity(submission); 
 							HttpResponse response = client.execute(post); 
 							HttpEntity resEntity = response.getEntity();
-							logger.info("USER:  "+username+ ":  " +  EntityUtils.toString(response.getEntity()));
+							String s = fileName;
+							java.util.StringTokenizer st = new java.util.StringTokenizer(s, "_");
+							
+							logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " +  EntityUtils.toString(response.getEntity()));
 							if (resEntity != null) {
 								//return resEntity.toString();
 			               }
@@ -258,9 +258,8 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 				
 			}
 			
-		}catch (Exception e){ e.printStackTrace();  return e.toString();}
-		//WriteLogFiles();
-		return outR;
+		}catch (Exception e){ e.printStackTrace();  return false;}
+		return true;
 			
 	}
 	
