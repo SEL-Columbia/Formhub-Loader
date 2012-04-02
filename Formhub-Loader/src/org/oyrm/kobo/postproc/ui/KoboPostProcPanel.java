@@ -110,7 +110,6 @@ PropertyChangeListener {
 	}
 	static Dimension prefsize = new Dimension(300, 275);
 
-	//private static Logger logger = Logger.getLogger("org.oyrm.kobo");  //  @jve:decl-index=0:
 	private static Formatter lf;
 	private static FileHandler lh;
 	static {
@@ -179,10 +178,9 @@ PropertyChangeListener {
 	private JButton xmlAggregateButton;
 	private JButton UnmountButton;
 	private JButton odkAggregateButton;
-	private JButton xmlSyncButton;
 	
 	private JTextArea statusText, syncStatusText, transStatusText;
-	private File xmlDir, csvDir, sourceDir,syncsourceDir, DeviceID;
+	private File xmlDir, csvDir, sourceDir, DeviceID;
 
 	private KoboSurveyDeviceSynchronizer xmlSyncProcessor;
 	private KoboSurveyDeviceSynchronizer ServerSyncProcessor;
@@ -198,10 +196,7 @@ PropertyChangeListener {
 	private JTextField storagePathText = null;
 	private JTextField deviceText = null;
 	private JTextField syncStoragePathText = null;
-	private JTextField syncUserNameText = null;
 	private JTextField UserNameText = null;
-	private JTextField syncDeviceText = null;
-	private JLabel saveToCSVLabel = null;
 	private JButton csvTranscribeButton = null;
 	private Integer nSynced = 0;  //  @jve:decl-index=0:
 	private Integer nTranscribed = 0;  //  @jve:decl-index=0:
@@ -224,18 +219,12 @@ PropertyChangeListener {
 	private KoboPostProcPanel(JFrame frame) throws HeadlessException {
 		super();
 
-		/*csvDir = new File(KoboPostProcPanel.applicationProps
-				.getProperty(Constants.PROPKEY_DIRNAME_CSV));*/
 		xmlDir = new File(KoboPostProcPanel.applicationProps
 				.getProperty(Constants.PROPKEY_DIRNAME_XML_STORAGE));
 		sourceDir = new File(KoboPostProcPanel.applicationProps
 				.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
-		syncsourceDir = new File(KoboPostProcPanel.applicationProps
-				.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
 		DeviceID = new File(KoboPostProcPanel.applicationProps
 				.getProperty(Constants.PROPKEY_DEVICE_ID));
-		
-		
 		this.frame = frame;
 		init();
 	}
@@ -333,7 +322,6 @@ PropertyChangeListener {
 		gbcAggregateToLabel.insets = new Insets(marginY,0,0,marginY);
 		toLabel = new JLabel();
 		toLabel.setText(appText[Constants.AGGREGATE_TO_TEXT]);  // Generated
-		//toLabel.setAlignmentX(RIGHT_ALIGNMENT);
 		
 		GridBagConstraints gbcDeviceID = new GridBagConstraints();
 		gbcDeviceID.gridy = 3;  // Generated
@@ -351,8 +339,6 @@ PropertyChangeListener {
 		JLabel UserLabel = new JLabel();
 		UserLabel.setText(appText[Constants.Formhub_ID]);
 		
-	
-		
 		GridBagConstraints gbcAggregateMessage = new GridBagConstraints();
 		gbcAggregateMessage.gridy = 5;  // Generated
 		gbcAggregateMessage.gridx = 0;  // Generated		
@@ -360,22 +346,6 @@ PropertyChangeListener {
 		gbcAggregateMessage.insets = new Insets(marginY,0,0,marginY);
 		AggregateErrorLabel = new JLabel();
 		AggregateErrorLabel.setForeground(Color.RED);
-		
-		/*GridBagConstraints gbcCSVPathLabel = new GridBagConstraints();
-		gbcCSVPathLabel.gridx = 0;  // Generated
-		gbcCSVPathLabel.gridy = 1;  // Generated
-		gbcCSVPathLabel.insets = new Insets(marginY,0,0,marginY);
-		saveToCSVLabel = new JLabel();
-		saveToCSVLabel.setText(appText[Constants.SAVE_TO_CSV_TEXT]);  // Generated*/
-		
-		/*GridBagConstraints gbcCsvText = new GridBagConstraints();
-		gbcCsvText.fill = GridBagConstraints.HORIZONTAL;  // Generated
-		gbcCsvText.gridwidth = 3;  // Generated
-		gbcCsvText.gridx = 1;  // Generated
-		gbcCsvText.gridy = 1;  // Generated
-		gbcCsvText.anchor = GridBagConstraints.WEST;  // Generated
-		gbcCsvText.weightx = 1.0;  // Generated
-		gbcCsvText.insets = new Insets(marginY,0,0,marginY);*/
 		
 		GridBagConstraints gbcSourceText = new GridBagConstraints();
 		gbcSourceText.fill = GridBagConstraints.HORIZONTAL;  // Generated
@@ -394,8 +364,6 @@ PropertyChangeListener {
 		gbcXmlStoragePathText.anchor = GridBagConstraints.WEST;  // Generated
 		gbcXmlStoragePathText.weightx = 1.0;  // Generated
 		gbcXmlStoragePathText.insets = new Insets(marginY,0,0,marginY);
-		
-	
 		
 		GridBagConstraints gbcDeviceText = new GridBagConstraints();
 		gbcDeviceText.fill = GridBagConstraints.HORIZONTAL;  // Generated
@@ -461,13 +429,6 @@ PropertyChangeListener {
 		/*************************************************************************************/
 		/*************************************************************************************/
 		
-		
-		/*GridBagConstraints gbcTranscribeButton = new GridBagConstraints();
-		gbcTranscribeButton.gridx = 4;  // Generated
-		gbcTranscribeButton.anchor = GridBagConstraints.EAST;  // Generated
-		gbcTranscribeButton.gridy = 2;  // Generated
-		gbcTranscribeButton.insets = new Insets(marginY,0,0,marginY);*/
-		
 		GridBagConstraints gbcStatus = new GridBagConstraints();
 		gbcStatus.gridheight = 1;  // Generated
 		gbcStatus.gridwidth = 1;  // Generated
@@ -477,88 +438,9 @@ PropertyChangeListener {
 		gbcStatus.fill = GridBagConstraints.BOTH;
 		gbcStatus.anchor = GridBagConstraints.WEST;
 		
-		/*GridBagConstraints gbcCsv = new GridBagConstraints();
-		gbcCsv.gridheight = 1;  // Generated
-		gbcCsv.gridwidth = 1;  // Generated
-		gbcCsv.gridx = 0;  // Generated
-		gbcCsv.gridy = 1;  // Generated
-		gbcCsv.weightx = 1.0D;  // Generated
-		gbcCsv.fill = GridBagConstraints.BOTH;
-		gbcCsv.anchor = GridBagConstraints.WEST;*/
-		
 		/***************************************************************************************************/
 		/***********************************Describing Syncing Files****************************************/
 		/***************************************************************************************************/
-		
-		/*GridBagConstraints gbcSyncFolderLabel = new GridBagConstraints();
-		gbcSyncFolderLabel.gridy = 0;  // Generated
-		gbcSyncFolderLabel.gridx = 0;  // Generated
-		gbcSyncFolderLabel.anchor = GridBagConstraints.WEST;
-		gbcSyncFolderLabel.insets = new Insets(marginY,0,0,marginY);
-		JLabel folderLabel = new JLabel();
-		folderLabel.setText("Survey Instances:");
-		//toLabel.setText(appText[Constants.AGGREGATE_TO_TEXT]);  // Generated
-		//toLabel.setAlignmentX(RIGHT_ALIGNMENT);
-		
-		GridBagConstraints gbcSyncUserLabel = new GridBagConstraints();
-		gbcSyncUserLabel.gridy = 1;  // Generated
-		gbcSyncUserLabel.gridx = 0;  // Generated
-		gbcSyncUserLabel.anchor = GridBagConstraints.WEST;
-		gbcSyncUserLabel.insets = new Insets(marginY,0,0,marginY);
-		JLabel SyncUserLabel = new JLabel();
-		SyncUserLabel.setText("UserName:");
-		
-		GridBagConstraints gbcSyncDeviceIDLabel = new GridBagConstraints();
-		gbcSyncDeviceIDLabel.gridy = 2;  // Generated
-		gbcSyncDeviceIDLabel.gridx = 0;  // Generated
-		gbcSyncDeviceIDLabel.anchor = GridBagConstraints.WEST;
-		gbcSyncDeviceIDLabel.insets = new Insets(marginY,0,0,marginY);
-		JLabel SyncDeviceLabel = new JLabel();
-		SyncDeviceLabel.setText("Device ID:");
-		
-		GridBagConstraints gbcSyncStoragePathText = new GridBagConstraints();
-		gbcSyncStoragePathText.fill = GridBagConstraints.HORIZONTAL;  // Generated
-		gbcSyncStoragePathText.gridwidth = 3;  // Generated
-		gbcSyncStoragePathText.gridx = 1;  // Generated
-		gbcSyncStoragePathText.gridy = 0;  // Generated
-		gbcSyncStoragePathText.anchor = GridBagConstraints.WEST;  // Generated
-		gbcSyncStoragePathText.weightx = 1.0;  // Generated
-		gbcSyncStoragePathText.insets = new Insets(marginY,0,0,marginY);
-		
-		GridBagConstraints gbcSyncUserNameText = new GridBagConstraints();
-		gbcSyncUserNameText.fill = GridBagConstraints.HORIZONTAL;  // Generated
-		gbcSyncUserNameText.anchor = GridBagConstraints.WEST;  // Generated
-		gbcSyncUserNameText.gridwidth = 3;  // Generated
-		gbcSyncUserNameText.gridx = 1;  // Generated
-		gbcSyncUserNameText.gridy = 1;  // Generated
-		gbcSyncUserNameText.weightx = 1.0;  // Generated
-		gbcSyncUserNameText.insets = new Insets(marginY,0,0,marginY);
-		
-		GridBagConstraints gbcSyncDeviceText = new GridBagConstraints();
-		gbcSyncDeviceText.fill = GridBagConstraints.HORIZONTAL;  // Generated
-		gbcSyncDeviceText.anchor = GridBagConstraints.WEST;  // Generated
-		gbcSyncDeviceText.gridwidth = 3;  // Generated
-		gbcSyncDeviceText.gridx = 1;  // Generated
-		gbcSyncDeviceText.gridy = 2;  // Generated
-		gbcSyncDeviceText.weightx = 1.0;  // Generated
-		gbcSyncDeviceText.insets = new Insets(marginY,0,0,marginY);
-		
-		GridBagConstraints gbcSyncBrowseStorageButton = new GridBagConstraints();
-		gbcSyncBrowseStorageButton.gridx = 4;  // Generated
-		gbcSyncBrowseStorageButton.anchor = GridBagConstraints.EAST;  // Generated
-		gbcSyncBrowseStorageButton.gridy = 0;  // Generated
-		gbcSyncBrowseStorageButton.insets = new Insets(marginY,0,0,marginY);*/
-		
-		/*GridBagConstraints gbcSyncButton = new GridBagConstraints();		
-		gbcSyncButton.gridx = 4;  // Generated
-		gbcSyncButton.anchor = GridBagConstraints.EAST;  // Generated
-		gbcSyncButton.gridy = 1;  // Generated
-		gbcSyncButton.insets = new Insets(marginY,0,0,marginY);*/
-		/***************************************************************************************************/
-		/***************************************************************************************************/
-		/***************************************************************************************************/
-
-		
 		
 		GridBagConstraints gbcXml = new GridBagConstraints();
 		gbcXml.gridheight = 1;
@@ -626,32 +508,16 @@ PropertyChangeListener {
 		xmlPanel.add(getDeviceText(), gbcDeviceText);  // Generated
 		xmlPanel.add(getUserNameText(),gbcUserNameText);
 		xmlPanel.add(UserLabel, gbcUserLabel);  // Generated
-		//xmlPanel.add(getServerSyncButton(), gbcSyncButton);  // Generated
 		
 		
 		JPanel syncPanel = new JPanel();
 		syncPanel.setLayout(new GridBagLayout());
 		syncPanel.setBorder(BorderFactory.createEmptyBorder());
-		//.createTitledBorder(null, appText[Constants.SYNC_TO_ODK_SERVER], TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));  // Generated
 		syncPanel.add(ImageLabel, gbcImageLabel);
-		/*syncPanel.add(getSyncSrcDirButton(), gbcSyncBrowseStorageButton);
-		syncPanel.add(folderLabel, gbcSyncFolderLabel);  // Generated
-		syncPanel.add(getSyncStorageText(), gbcSyncStoragePathText);  // Generated
-		syncPanel.add(SyncUserLabel, gbcSyncUserLabel);  // Generated
-		syncPanel.add(getSyncUserText(), gbcSyncUserNameText);  // Generated
-		//syncPanel.add(SyncDeviceLabel, gbcSyncDeviceIDLabel);  // Generated
-		//syncPanel.add(getSyncDeviceText(), gbcSyncDeviceText);  // Generated
-		//syncPanel.add(getServerSyncButton(), gbcSyncButton);  // Generated
-		//syncPanel.add(getServerSyncButton(), gbcSyncButton);  // Generated
-		*/
+		
 		
 		this.add(xmlPanel, gbcXml);  // Generated
 		this.add(syncPanel, gbcSync);  // Generated
-		//this.add(getStatusPanel(), gbcStatus);  // Generated
-		
-		
-
-		
 		validateDir(xmlDir);
 		validateDir(sourceDir);
 		
@@ -668,7 +534,7 @@ PropertyChangeListener {
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
-	private JPanel getStatusPanel() {
+	/*private JPanel getStatusPanel() {
 		if (statusPanel == null) {
 			try {
 				GridBagConstraints gbcTransStatusText = new GridBagConstraints();
@@ -748,22 +614,17 @@ PropertyChangeListener {
 	}
 	
 	private JTextField getDeviceText() {
-		//if (srcPathText == null) {
 		deviceText = new JTextField();
-		//srcPathText.setText(xmlDir.getAbsolutePath());
 		deviceText.setAlignmentX(JTextField.LEADING);
 		deviceText.setEditable(true);
-		//}
 		return deviceText;
 	}
 	
 	
 	private JTextField getUserNameText() {
 		UserNameText = new JTextField();
-		//srcPathText.setText(xmlDir.getAbsolutePath());
 		UserNameText.setAlignmentX(JTextField.LEADING);
 		UserNameText.setEditable(true);
-		//}
 		return UserNameText;
 	}
 	
@@ -772,6 +633,7 @@ PropertyChangeListener {
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
+/*
 	private JTextField getCsvText() {
 		if (storagePathText == null) {
 				storagePathText = new JTextField();
@@ -795,7 +657,6 @@ PropertyChangeListener {
 	private JTextField getSyncUserText() {
 		if (syncUserNameText == null) {
 		syncUserNameText = new JTextField();
-		//srcPathText.setText(xmlDir.getAbsolutePath());
 		syncUserNameText.setAlignmentX(JTextField.LEADING);
 		syncUserNameText.setEditable(true);
 		}
@@ -803,12 +664,9 @@ PropertyChangeListener {
 	}
 	
 	private JTextField getSyncDeviceText() {
-		//if (srcPathText == null) {
 		syncDeviceText = new JTextField();
-		//srcPathText.setText(xmlDir.getAbsolutePath());
 		syncDeviceText.setAlignmentX(JTextField.LEADING);
 		syncDeviceText.setEditable(true);
-		//}
 		return syncDeviceText;
 	}
 
@@ -855,8 +713,9 @@ PropertyChangeListener {
 		}
 		return odkAggregateButton;
 	}
-	
+/*	
 	private JButton getServerSyncButton() {
+
 		if (xmlSyncButton == null) {
 			    xmlSyncButton = new JButton(appText[Constants.XML_SYNC_COMMAND]);
 			    xmlSyncButton.setAlignmentX(Component.RIGHT_ALIGNMENT);  // Generated
@@ -873,7 +732,7 @@ PropertyChangeListener {
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getCsvTranscribeButton() {
+/*	private JButton getCsvTranscribeButton() {
 		if (csvTranscribeButton == null) {
 				csvTranscribeButton = new JButton(appText[Constants.CSV_CONVERT_COMMAND]);
 				csvTranscribeButton.setAlignmentX(Component.RIGHT_ALIGNMENT);  // Generated
@@ -892,12 +751,13 @@ PropertyChangeListener {
 	protected void update() {
 		sourceDir = new File(KoboPostProcPanel.applicationProps.getProperty(
 				Constants.PROPKEY_DIRNAME_XML_DEV));
+		
 		csvPathText.setText(sourceDir.getAbsolutePath());
 		System.setProperty(
 				Constants.PROPKEY_DIRNAME_XML_DEV, 
 				(String)applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
 		
-		xmlDir = new File(applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_STORAGE));
+		xmlDir = new File(KoboPostProcPanel.applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_STORAGE));
 		srcPathText.setText(xmlDir.getAbsolutePath());
 
 		System.setProperty(	
@@ -914,13 +774,7 @@ PropertyChangeListener {
 				(String)applicationProps.getProperty(
 						Constants.PROPKEY_DEVICE_ID));
 		
-		/*csvDir = new File(applicationProps.getProperty(Constants.PROPKEY_DIRNAME_CSV));
-		storagePathText.setText(csvDir.getAbsolutePath());
-		System.setProperty(	
-				Constants.PROPKEY_DIRNAME_CSV, 
-				(String)applicationProps.getProperty(
-						Constants.PROPKEY_DIRNAME_CSV));
-		*/
+		
 		statusText.setText(appText[Constants.DIR_PREF_SET_TEXT]);
 		
 		updatePreferences();
@@ -932,32 +786,26 @@ PropertyChangeListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == null) {
-			//logger.finer("null action event");
 			return;
 		} else if (e.getActionCommand().equals(appText[Constants.XML_AGGREGATE_COMMAND])) {
-			//logger.fine("ActionEvent " + e.getActionCommand());
 			syncXML();
 			statusText.setText(appText[Constants.AGGREGATE_XML_TASK_TEXT]);
 
 		}
 		else if (e.getActionCommand().equals(appText[Constants.ODK_AGGREGATE_COMMAND])) {
-			//logger.fine("ActionEvent " + e.getActionCommand());
 			try {
 				syncServer();
 			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		
-			//statusText.setText(appText[Constants.AGGREGATE_XML_TASK_TEXT]);
 		}
 		
 		
 		else if (e.getActionCommand().equals(appText[Constants.UNMOUNT_COMMAND])) {
-			//logger.fine("ActionEvent " + e.getActionCommand());
 			try {
 				unmountDevice();
 			} catch (IOException e1) {
@@ -968,8 +816,6 @@ PropertyChangeListener {
 
 		}
 		 else if (e.getActionCommand().equals(appText[Constants.CSV_CONVERT_COMMAND])) {			
-			//logger.fine("ActionEvent " + e.getActionCommand());
-			//trascribeToCSV();
 			statusText.setText(appText[Constants.CONVERT_TO_CSV_TASK_TEXT]);
 		}
 		
@@ -980,8 +826,6 @@ PropertyChangeListener {
 	 * the directories specified in the GUI
 	 */
 	private void syncXML() {
-		//logger.entering(getClass().getName(), "syncXML()");
-		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
 		AggregateErrorLabel.setText("");
 		validateDir(xmlDir);
 		validateDir(sourceDir);
@@ -989,16 +833,8 @@ PropertyChangeListener {
 		
 		
 		boolean success = (new File(xmlDir.toString().concat("/Downloaded Files"))).mkdir();
-	    //success = (new File(xmlDir.toString().concat("/Downloaded Files/"+simpleDateFormat.format(new Date())))).mkdir();
 	    success = (new File(xmlDir.toString().concat("/Synchonized Files"))).mkdir();
-	    
-		/*if(!sourceDir.toString().endsWith("odk"))
-		{
-			AggregateErrorLabel.setText("Select ODK Folder");
-			logger.entering(getClass().getName(), "syncXML()");
-			return;
-		}*/
-		if(deviceText.getText().isEmpty())
+	    if(deviceText.getText().isEmpty())
 		{
 			AggregateErrorLabel.setText("Enter Device ID");
 			//logger.entering(getClass().getName(), "syncXML()");
@@ -1010,8 +846,7 @@ PropertyChangeListener {
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		//get current date time with Date()
 		Date date = new Date();
-		//System.out.println(dateFormat.format(date));
-	    
+		
 		xmlSyncProcessor = new KoboSurveyDeviceSynchronizer(new File(sourceDir.toString().concat("/odk")), new File(xmlDir.toString().concat("/Downloaded Files/")), deviceText.getText().concat("_"+dateFormat.format(date)));
 		progressMonitor = new ProgressMonitor(this, appText[Constants.WRITING_XML_TO_STORAGE]
 				, "", 0, xmlSyncProcessor
@@ -1024,20 +859,9 @@ PropertyChangeListener {
 		progressMonitor.setNote(appText[Constants.STARTING_TEXT]);
 		progressMonitor.setProgress(1);
 		odkAggregateButton.setEnabled(true);
-		//xmlAggregateButton.setEnabled(false);
-		//UnmountButton.setEnabled(true);
 		UserNameText.setEditable(true);
-		//deviceText.setEditable(false);
-		/*try
-		  {
-			Runtime.getRuntime().exec("cmd /c start unmount.bat");
-		  }catch (IOException e){}*/
-		
-		//logger.fine("XML Storage Directory:" + xmlDir.getAbsolutePath());
-		//logger.entering(getClass().getName(), "syncXML()");
-
 	}
-	
+/*	
 	private void syncODKServer() throws MalformedURLException, IOException
 	{
 		//logger.entering(getClass().getName(), "syncODK()");
@@ -1046,13 +870,6 @@ PropertyChangeListener {
 		validateDir(xmlDir);
 		validateDir(sourceDir);
 		
-		/*if(!sourceDir.toString().endsWith("odk"))
-		{
-			//Error message if Folder is Wrong
-			AggregateErrorLabel.setText("Select ODK Folder");
-			logger.entering(getClass().getName(), "syncXML()");
-			return;
-		}*/
 		if(deviceText.getText().isEmpty())
 		{
 			//Error message if Device ID is missing
@@ -1089,7 +906,7 @@ PropertyChangeListener {
 			deviceText.setEditable(true);
 		}
 	}
-	
+	*/
 	private void unmountDevice() throws IOException
 	{
 		/*ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
@@ -1134,7 +951,6 @@ PropertyChangeListener {
 		if(serverCheck)
 		{
 			AggregateErrorLabel.setText("Surveys Synced");
-			//odkAggregateButton.setEnabled(false);
 			xmlAggregateButton.setEnabled(true);
 			UserNameText.setEditable(true);
 			deviceText.setEditable(true);
@@ -1156,34 +972,6 @@ PropertyChangeListener {
 	 * Transcribe the locally stored XML into persistent CSV storage
 	 * using the KoboBatchTranscriber
 	 */
-/*	private void trascribeToCSV() {
-		logger.entering(getClass().getName(), "transcribeToCSV()");
-		logger.fine("transcribeToCsv():\n");
-		logger.fine("\tXML Storage Directory:" + xmlDir.getAbsolutePath());
-
-		try {
-			validateDir(xmlDir);
-			validateDir(csvDir);
-			csvTranscribeProcessor = new KoboBatchTranscriber(xmlDir, csvDir);
-		} catch (IllegalArgumentException iaex) {
-			logger.warning(iaex.getMessage());
-			return;
-		}
-		progressMonitor = new ProgressMonitor(this, "Sample Processor", "", 0,
-				csvTranscribeProcessor.getLengthOfTask());
-		progressMonitor.setMillisToDecideToPopup(10);
-		progressMonitor.setMillisToPopup(100);
-		csvTranscribeProcessor.addPropertyChangeListener(this);
-		csvTranscribeProcessor.execute();
-		progressMonitor.setNote(appText[Constants.STARTING_TEXT]);
-		progressMonitor.setProgress(1);
-		xmlAggregateButton.setEnabled(false);
-		csvTranscribeButton.setEnabled(false);
-
-		logger.fine("\tCSV Storage Directory:" + csvDir.getAbsolutePath());
-		logger.exiting(getClass().getName(), "transcribeToCSV()");
-	}
-	*/
 	public void exit() {
 		this.updatePreferences();
 	}
@@ -1328,25 +1116,7 @@ PropertyChangeListener {
 			} else if (Constants.CHANGEPROP_NAME_NCOMPLETED == evt.getPropertyName()) {
 				nSynced = nSynced + (Integer)evt.getNewValue();
 			}
-		} /*else if (evt.getSource().equals(this.csvTranscribeProcessor)) {
-			if (Constants.CHANGEPROP_NAME_PROGRESS == evt.getPropertyName()) {
-				int progress = (Integer) evt.getNewValue();
-				String message = String.format(appText[Constants.COMPLETED_PERCENT_TEXT], progress);
-				progressMonitor.setNote(message);
-				progressMonitor.setProgress(progress);
-			} else if (Constants.CHANGEPROP_NAME_STATE == evt.getPropertyName()) {
-				if (csvTranscribeProcessor.isDone()) {
-					progressMonitor.setNote(appText[Constants.TASK_COMPLETED_TEXT]);
-					statusText.setText(appText[Constants.CSV_CONVERT_PROC_COMPLETE_TEXT]);
-					transStatusText.setText(String.format(appText[Constants.COUNTER_TRANS_TEXT], nTranscribed));
-					csvTranscribeButton.setEnabled(true);
-					xmlAggregateButton.setEnabled(true);
-				}
-			} else if (Constants.CHANGEPROP_NAME_NCOMPLETED == evt.getPropertyName()) {
-				nTranscribed = nTranscribed + (Integer)evt.getNewValue();
-				transStatusText.setText(String.format(appText[Constants.COUNTER_TRANS_TEXT], nTranscribed));
-			}
-		}*/
+		} 
 	}
 	
 	
@@ -1362,7 +1132,6 @@ PropertyChangeListener {
 				final JFileChooser xmlSrcChooser = new JFileChooser();
 				xmlSrcChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				xmlSrcChooser.setDialogTitle(appText[Constants.CHANGE_XML_DIR_TEXT]);
-				//xmlSrcChooser.setCurrentDirectory(srcDir);
 				xmlSrcChooser.setCurrentDirectory(sourceDir);
 				
 				srcDirButton.setText(appText[Constants.BROWSE_TEXT]);  // Generated
@@ -1400,7 +1169,6 @@ PropertyChangeListener {
 				final JFileChooser xmlSrcChooser = new JFileChooser();
 				xmlSrcChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				xmlSrcChooser.setDialogTitle(appText[Constants.CHANGE_XML_DIR_TEXT]);
-				//xmlSrcChooser.setCurrentDirectory(srcDir);
 				xmlSrcChooser.setCurrentDirectory(sourceDir);
 				
 				syncsrcDirButton.setText(appText[Constants.BROWSE_TEXT]);  // Generated
@@ -1440,7 +1208,6 @@ PropertyChangeListener {
 				dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				dirChooser.setDialogTitle(appText[Constants.CHANGE_SRC_DIR_TEXT]);
 				dirChooser.setCurrentDirectory(xmlDir);
-				
 				xmlStorageButton.setText(appText[Constants.BROWSE_TEXT]);  // Generated
 				xmlStorageButton.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1503,10 +1270,6 @@ PropertyChangeListener {
 		return csvStorageButton;
 	}
 	
-	public void WriteLogFiles()
-	{
-		  
-	}
 	
 	public void windowClosed(WindowEvent e) {}
 
