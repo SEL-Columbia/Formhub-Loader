@@ -749,31 +749,17 @@ PropertyChangeListener {
 	 * Update Preferences 
 	 */
 	protected void update() {
-		sourceDir = new File(KoboPostProcPanel.applicationProps.getProperty(
-				Constants.PROPKEY_DIRNAME_XML_DEV));
-		
+		sourceDir = new File(KoboPostProcPanel.applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
 		csvPathText.setText(sourceDir.getAbsolutePath());
-		System.setProperty(
-				Constants.PROPKEY_DIRNAME_XML_DEV, 
-				(String)applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
+		System.setProperty( Constants.PROPKEY_DIRNAME_XML_DEV, (String)applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_DEV));
 		
 		xmlDir = new File(KoboPostProcPanel.applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_STORAGE));
 		srcPathText.setText(xmlDir.getAbsolutePath());
-
-		System.setProperty(	
-				Constants.PROPKEY_DIRNAME_XML_STORAGE, 
-				(String)applicationProps.getProperty(
-						Constants.PROPKEY_DIRNAME_XML_STORAGE));
+		System.setProperty(	Constants.PROPKEY_DIRNAME_XML_STORAGE, (String)applicationProps.getProperty(Constants.PROPKEY_DIRNAME_XML_STORAGE));
 		
-		DeviceID = new File(KoboPostProcPanel.applicationProps
-				.getProperty(Constants.PROPKEY_DEVICE_ID));
+		DeviceID = new File(KoboPostProcPanel.applicationProps.getProperty(Constants.PROPKEY_DEVICE_ID));
 		deviceText.setText(DeviceID.toString());
-		
-		System.setProperty(	
-				Constants.PROPKEY_DEVICE_ID, 
-				(String)applicationProps.getProperty(
-						Constants.PROPKEY_DEVICE_ID));
-		
+		System.setProperty( Constants.PROPKEY_DEVICE_ID, (String)applicationProps.getProperty(Constants.PROPKEY_DEVICE_ID));
 		
 		statusText.setText(appText[Constants.DIR_PREF_SET_TEXT]);
 		
@@ -803,8 +789,6 @@ PropertyChangeListener {
 			}
 		
 		}
-		
-		
 		else if (e.getActionCommand().equals(appText[Constants.UNMOUNT_COMMAND])) {
 			try {
 				unmountDevice();
@@ -1142,7 +1126,7 @@ PropertyChangeListener {
 								File srcDir = xmlSrcChooser.getSelectedFile();								
 								KoboPostProcPanel.applicationProps.setProperty(
 										Constants.PROPKEY_DIRNAME_XML_DEV, srcDir.getAbsolutePath());								
-								srcPathText.setText(srcDir.getAbsolutePath());
+								csvPathText.setText(srcDir.getAbsolutePath());
 								update();
 							case JFileChooser.CANCEL_OPTION:
 							case JFileChooser.ERROR_OPTION:
@@ -1162,7 +1146,7 @@ PropertyChangeListener {
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getSyncSrcDirButton() {
+/*	private JButton getSyncSrcDirButton() {
 		if (syncsrcDirButton == null) {
 			try {
 				syncsrcDirButton = new JButton();
@@ -1192,7 +1176,7 @@ PropertyChangeListener {
 			}
 		}
 		return syncsrcDirButton;
-	}
+	}*/
 	
 	
 	/**
@@ -1216,7 +1200,7 @@ PropertyChangeListener {
 								File dir = dirChooser.getSelectedFile();								
 								KoboPostProcPanel.applicationProps.setProperty(
 										Constants.PROPKEY_DIRNAME_XML_STORAGE, dir.getAbsolutePath());								
-								storagePathText.setText(xmlDir.getAbsolutePath());
+								srcPathText.setText(dir.getAbsolutePath());
 								update();
 							case JFileChooser.CANCEL_OPTION:
 							case JFileChooser.ERROR_OPTION:
