@@ -911,43 +911,62 @@ PropertyChangeListener {
 		deviceText.setText("");
 	}
 	private void syncServer() throws MalformedURLException, IOException {
-		//logger.entering(getClass().getName(), "syncODK()");
-		//logger.fine("\tDevice Source Directory:" + sourceDir.getAbsolutePath());
-		AggregateErrorLabel.setText("");
 		validateDir(xmlDir);
 		validateDir(sourceDir);
-		if(UserNameText.getText().isEmpty())
+		
+		if (AggregateErrorLabel.getText().equals("Surveys Synced"))
+		{
+			AggregateErrorLabel.setText(" ");
+			ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
+			boolean serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
+			if(serverCheck)
+			{
+				AggregateErrorLabel.setText("Surveys Synced");
+				xmlAggregateButton.setEnabled(true);
+				UserNameText.setEditable(true);
+				deviceText.setEditable(true);
+				deviceText.setText("");
+			}
+			else
+			{
+				AggregateErrorLabel.setText("Error in Syncing ");
+				odkAggregateButton.setEnabled(true);
+				xmlAggregateButton.setEnabled(true);
+				UserNameText.setEditable(true);
+				deviceText.setEditable(true);
+			}
+			return; 
+		}
+		else if(UserNameText.getText().isEmpty())
 		{
 			//Error message if Device ID is missing
 			AggregateErrorLabel.setText("Enter Valid User");
-			//logger.entering(getClass().getName(), "syncXML()");
 			return;
 		}
-		
 		else
 		{
 			AggregateErrorLabel.setText("Syncing Files");
+			ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
+			boolean serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
+			if(serverCheck)
+			{
+				AggregateErrorLabel.setText("Surveys Synced");
+				xmlAggregateButton.setEnabled(true);
+				UserNameText.setEditable(true);
+				deviceText.setEditable(true);
+				deviceText.setText("");
+			}
+			else
+			{
+				AggregateErrorLabel.setText("Error in Syncing ");
+				odkAggregateButton.setEnabled(true);
+				xmlAggregateButton.setEnabled(true);
+				UserNameText.setEditable(true);
+				deviceText.setEditable(true);
+			}
 		}
-		ServerSyncProcessor = new KoboSurveyDeviceSynchronizer();
-		boolean serverCheck = ServerSyncProcessor.BulkUpload(UserNameText.getText() , xmlDir.toString());
 		
 		
-		if(serverCheck)
-		{
-			AggregateErrorLabel.setText("Surveys Synced");
-			xmlAggregateButton.setEnabled(true);
-			UserNameText.setEditable(true);
-			deviceText.setEditable(true);
-			deviceText.setText("");
-		}
-		else
-		{
-			AggregateErrorLabel.setText("Error in Syncing ");
-			odkAggregateButton.setEnabled(true);
-			xmlAggregateButton.setEnabled(true);
-			UserNameText.setEditable(true);
-			deviceText.setEditable(true);
-		}
 		
 		
 	}
