@@ -2,27 +2,29 @@ Installation
 
 Here are the steps I went through to install Formhub-Loader in Mac OS-X. The release is an eclipse project. 
 
-If you don't already have a Java Runtime Environment installed this is necessary for running eclipse.
+  If you don't already have a Java Runtime Environment installed this is necessary for running eclipse.
 
-First, I download the latest version of eclipse from: http://www.eclipse.org/downloads/
+  First, I download the latest version of eclipse from: http://www.eclipse.org/downloads/
 
-Next, this being ant build project, install ant plugin for eclipse.  
+  Next, this being ant build project, install ant plugin for eclipse.  
 
 Next, I cloned the repo:
 
-cd ~/Documents
+  cd ~/Documents
 
-git clone git@github.com:modilabs/Formhub-Loader.git
+  git clone git@github.com:modilabs/Formhub-Loader.git
 
 Build the Eclipse Project:
 
-run Eclipse
+  run Eclipse
 
-change the workspace to Formhub-Loader
+  change the workspace to Formhub-Loader
 
-run an ant build on build.xml
+  run an ant build on build.xml
 
-This step will build an executable jar file in the /dist directory. Use the jar for uploading odk files to formhub
+  This step will build an executable jar file in the /dist directory. Use the jar for uploading odk files to formhub.
+
+Uploading in Formhub 
 
 
 
