@@ -26,15 +26,15 @@ Build the Eclipse Project:
 
 Uploading in Formhub 
 
-		Run the Formhub-Loader on your notebook.
+	Run the Formhub-Loader on your notebook.
 
-		Browse the "Form Instances" to the mounted drive.
+	Browse the "Form Instances" to the mounted drive.
 
-		Browse the "Download To" to a folder where you would save the form instances.
+	Browse the "Download To" to a folder where you would save the form instances.
 
-    Provide a DeviceID that could be a unique ID for the devices for future reference and download the form instances.
+	Provide a DeviceID that could be a unique ID for the devices for future reference and download the form instances.
 
-		To Sync with Formhub, upload the Formhub ID and press the Sync Server button
+	To Sync with Formhub, upload the Formhub ID and press the Sync Server button
 
 	
 
