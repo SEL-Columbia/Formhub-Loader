@@ -128,10 +128,7 @@ PropertyChangeListener {
 		//logger.setLevel(Level.parse(System.getProperty(Constants.PROPKEY_LOGGING_LEVEL)));
 	}
 
-
 	
-	
-
 	protected static String[] appText = {
 		"Download",
 		"Convert to CSV",
@@ -498,7 +495,6 @@ PropertyChangeListener {
 		xmlPanel.add(getOdkSyncButton(), gbcOdkSyncButton);
 		xmlPanel.add(getUnmountButton(),gbcUnmountButton);
 		
-		
 		xmlPanel.add(FromLabel, gbcDeviceFolderLabel);  // Generated
 		xmlPanel.add(getSourceText(), gbcSourceText);  // Generated
 		xmlPanel.add(toLabel, gbcAggregateToLabel);  // Generated
@@ -509,12 +505,10 @@ PropertyChangeListener {
 		xmlPanel.add(getUserNameText(),gbcUserNameText);
 		xmlPanel.add(UserLabel, gbcUserLabel);  // Generated
 		
-		
 		JPanel syncPanel = new JPanel();
 		syncPanel.setLayout(new GridBagLayout());
 		syncPanel.setBorder(BorderFactory.createEmptyBorder());
 		syncPanel.add(ImageLabel, gbcImageLabel);
-		
 		
 		this.add(xmlPanel, gbcXml);  // Generated
 		this.add(syncPanel, gbcSync);  // Generated
@@ -929,7 +923,7 @@ PropertyChangeListener {
 			}
 			else
 			{
-				AggregateErrorLabel.setText("Error in Syncing ");
+				AggregateErrorLabel.setText("Oops something failed");
 				odkAggregateButton.setEnabled(true);
 				xmlAggregateButton.setEnabled(true);
 				UserNameText.setEditable(true);
@@ -958,7 +952,7 @@ PropertyChangeListener {
 			}
 			else
 			{
-				AggregateErrorLabel.setText("Error in Syncing ");
+				AggregateErrorLabel.setText("Oops something failed");
 				odkAggregateButton.setEnabled(true);
 				xmlAggregateButton.setEnabled(true);
 				UserNameText.setEditable(true);

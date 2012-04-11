@@ -218,9 +218,7 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
           //logger.setLevel(Level.ALL);  
             SimpleFormatter formatter = new SimpleFormatter();  
             fh.setFormatter(formatter);  
-            
-            
-			File folder = new File(Location.concat("/Downloaded Files"));
+     		File folder = new File(Location.concat("/Downloaded Files"));
 			InputStream in = null;
 			OutputStream out = null;
 			int survey = 0;
@@ -230,6 +228,7 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 						    File f = new File(Location.concat("/Downloaded Files/"+fileName));
 						    HttpClient client = new DefaultHttpClient();
 						    String postURL = "http://formhub.org/"+username +"/bulk-submission";
+						    //String postURL = "http://192.168.1.78:8000/"+username +"/bulk-submission";
 						    HttpPost post = new HttpPost(postURL); 
 							FileBody bin = new FileBody(f);
 							MultipartEntity submission = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -239,11 +238,10 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 							HttpEntity resEntity = response.getEntity();
 							String s = fileName;
 							java.util.StringTokenizer st = new java.util.StringTokenizer(s, "_");
-							
 							logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " +  EntityUtils.toString(response.getEntity()));
 							if (resEntity != null) {
 								//return resEntity.toString();
-			               }
+			                }
 							File dir = new File(Location.concat("/Synchonized Files"));
 							boolean shiftFiles = f.renameTo(new File(dir, f.getName()));
 							survey ++;
@@ -251,7 +249,7 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 				
 			}
 			
-		}catch (Exception e){ e.printStackTrace();  return false;}
+		}catch (Exception e){ logger.info(e.toString());  return false;}
 		return true;
 			
 	}
