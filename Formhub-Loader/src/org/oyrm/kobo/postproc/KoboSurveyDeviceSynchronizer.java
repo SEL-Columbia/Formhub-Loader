@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
@@ -31,6 +35,12 @@ import javax.swing.SwingWorker;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.ContainerFactory;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+//import java.util.Map;
+//import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,6 +53,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.oyrm.kobo.postproc.constants.Constants;
 import org.w3c.dom.Document;
+
+import com.sun.tools.jdi.LinkedHashMap;
 
 
 
@@ -242,29 +254,32 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 							HttpEntity resEntity = response.getEntity();
 							String sfileName = fileName;
 							java.util.StringTokenizer st = new java.util.StringTokenizer(sfileName, "_");
-							logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " +  EntityUtils.toString(response.getEntity()));
+							//logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " +  EntityUtils.toString(response.getEntity()));
 							
-							String s = "{\"message\": \"Your ODK submission was successful. 0 surveys imported. Your user now has 1313 instances.\", \"errors\": []}";
-							Object obj=JSONValue.parse(s);
-							JSONArray array=(JSONArray)obj;
-							logger.info("======the 2nd element of array======");
-							logger.info((String) array.get(1));
-							                
-							JSONObject obj2=(JSONObject)array.get(1);
-							logger.info("======field \"1\"==========");
-							logger.info((String) obj2.get("1"));    
+							String jsonText = EntityUtils.toString(response.getEntity());
+							JSONParser parser = new JSONParser();
+							ContainerFactory containerFactory = new ContainerFactory(){
+							public List creatArrayContainer() {
+							    return new LinkedList();
+							}
 
-							s="{}";
-							obj=JSONValue.parse(s);
-							logger.info((String) obj);
+							public Map createObjectContainer() {
+							  return new LinkedHashMap();
+							}
+							                        
+							};
 							                
-							s="[5,]";
-							obj=JSONValue.parse(s);
-							logger.info((String) obj);
-							                
-							s="[5,,2]";
-							obj=JSONValue.parse(s);
-							logger.info((String) obj);
+							try{
+							    Map json = (Map)parser.parse(jsonText, containerFactory);
+							    Iterator iter = json.entrySet().iterator();
+							    while(iter.hasNext()){
+							      Map.Entry entry = (Map.Entry)iter.next();
+							      logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " + entry.getKey() + "=>" + entry.getValue());
+							    }
+							  }
+							  catch(ParseException pe){
+							    System.out.println(pe);
+							  }
 							  
 							if (resEntity != null) {
 								//return resEntity.toString();
