@@ -45,6 +45,7 @@
 			<zipfileset src="./${lib.dir}/regexp-me.jar" includes="**/*.class" />
 			<zipfileset src="./${lib.dir}/standalone-compiler.jar" includes="**/*.class" />
 			<zipfileset src="./${lib.dir}/android-src.jar" includes="**/*.class" />
+			<zipfileset src="./${lib.dir}/json-simple-1.1.jar" includes="**/*.class" />
 			<manifest>
 				<attribute name="Main-Class"
 					value="org.oyrm.kobo.postproc.ui.KoboPostProcFrame" />

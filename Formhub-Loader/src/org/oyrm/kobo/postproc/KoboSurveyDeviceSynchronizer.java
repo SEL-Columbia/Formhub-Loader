@@ -28,6 +28,10 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.SwingWorker;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -236,9 +240,32 @@ public class KoboSurveyDeviceSynchronizer extends SwingWorker<Void, Void> {
 							post.setEntity(submission); 
 							HttpResponse response = client.execute(post); 
 							HttpEntity resEntity = response.getEntity();
-							String s = fileName;
-							java.util.StringTokenizer st = new java.util.StringTokenizer(s, "_");
+							String sfileName = fileName;
+							java.util.StringTokenizer st = new java.util.StringTokenizer(sfileName, "_");
 							logger.info("USER:"+username+ "  " +"DeviceID:"+ st.nextToken() + "   " +  EntityUtils.toString(response.getEntity()));
+							
+							String s = "{\"message\": \"Your ODK submission was successful. 0 surveys imported. Your user now has 1313 instances.\", \"errors\": []}";
+							Object obj=JSONValue.parse(s);
+							JSONArray array=(JSONArray)obj;
+							logger.info("======the 2nd element of array======");
+							logger.info((String) array.get(1));
+							                
+							JSONObject obj2=(JSONObject)array.get(1);
+							logger.info("======field \"1\"==========");
+							logger.info((String) obj2.get("1"));    
+
+							s="{}";
+							obj=JSONValue.parse(s);
+							logger.info((String) obj);
+							                
+							s="[5,]";
+							obj=JSONValue.parse(s);
+							logger.info((String) obj);
+							                
+							s="[5,,2]";
+							obj=JSONValue.parse(s);
+							logger.info((String) obj);
+							  
 							if (resEntity != null) {
 								//return resEntity.toString();
 			                }

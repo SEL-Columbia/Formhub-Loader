@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="lib/httpclient-cache-4.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/httpmime-4.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/android-src.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
